@@ -1,77 +1,156 @@
 # Appian Claude Code Skills
 
-A collection of Claude Code skills for Appian practitioners, covering brand compliance, sales positioning, and SAIL UI generation.
+A collection of Claude Code skills for Appian practitioners, covering brand compliance, sales positioning, SAIL UI generation, and presentation creation with AI-generated imagery.
 
-## Skills Included
+## Quick Start
 
-### 1. appian-branding
-Ensures Appian presentations, whitepapers, and collateral follow official brand guidelines including:
-- Colour palette (primary, secondary, accent)
-- Typography (Ubuntu, Poppins, Effra, Mulish)
-- Logo usage and placement
-- Terminology and capitalisation rules
-- Social media guidelines
-
-### 2. power-statement
-Generates client-focused Power Statements for sales positioning. Leads with customer pain points and results rather than product features. Includes:
-- 5-component structure (Headline, Transition, Issues, Offerings, Differentiators)
-- Discovery question generation
-- Channel adaptation (email, voicemail, proposals)
-
-### 3. sail-generation
-Generates production-quality Appian SAIL UI expressions from natural language descriptions using a two-phase workflow:
-1. **Mockup phase** - Static SAIL with sample data
-2. **Functional phase** - Live interfaces with record queries
-
-## Installation
+### First-Time Setup
 
 1. Clone or download this repository
-2. Open the folder in your IDE with Claude Code installed
-3. The skills will be automatically available
+2. Run the environment setup skill:
+   ```
+   /environment-setup
+   ```
+3. Configure your API keys in `.env` (copy from `.env.example`)
 
-## Usage
+### Using Skills
 
 Invoke skills using slash commands:
 
 ```
-/appian-branding - Apply brand guidelines to content
-/power-statement - Generate sales positioning
-/sail-generation - Create SAIL interfaces
+/environment-setup     - Install dependencies and configure API keys
+/appian-branding       - Apply brand guidelines to content
+/appian-presentations  - Create branded presentations (HTML + PPTX)
+/power-statement       - Generate sales positioning
+/sail-generation       - Create SAIL interfaces
 ```
+
+## Skills Included
+
+| Skill | Description | Requires Setup |
+|-------|-------------|----------------|
+| `environment-setup` | Install dependencies, configure API keys | No |
+| `appian-branding` | Brand compliance for presentations and collateral | No |
+| `appian-presentations` | Cinematic branded presentations with AI imagery | Yes |
+| `power-statement` | Client-focused sales positioning | No |
+| `sail-generation` | SAIL UI generation from natural language | No |
+
+### appian-branding
+
+Ensures Appian presentations, whitepapers, and collateral follow official brand guidelines including:
+- Colour palette (primary, secondary, accent)
+- Typography (Ubuntu, Poppins)
+- Logo usage and placement
+- Terminology and capitalisation rules
+
+### appian-presentations
+
+Creates visually impressive, Appian-branded presentations with:
+- Cinematic AI-generated corporate imagery (via Gemini API)
+- Dark mode Appian aesthetic with cyan accents
+- Interactive HTML preview for validation
+- PPTX export for Google Slides/PowerPoint
+
+**Two-phase workflow:**
+1. HTML Preview - Create and validate in browser
+2. PPTX Generation - Convert after user approval
+
+**Output:** Both `{name}.html` and `{name}.pptx` files
+
+### power-statement
+
+Generates client-focused Power Statements for sales positioning:
+- 5-component structure (Headline, Transition, Issues, Offerings, Differentiators)
+- Discovery question generation
+- Channel adaptation (email, voicemail, proposals)
+
+### sail-generation
+
+Generates production-quality Appian SAIL UI expressions:
+1. **Mockup phase** - Static SAIL with sample data
+2. **Functional phase** - Live interfaces with record queries
 
 ## Folder Structure
 
 ```
 appian-claude/
 ├── .claude/
-│   ├── CLAUDE.md              (Project instructions)
+│   ├── CLAUDE.md                 (Project instructions)
 │   └── skills/
-│       ├── appian-branding/
-│       ├── power-statement/
-│       └── sail-generation/
+│       ├── appian-branding/      (Brand compliance)
+│       ├── appian-presentations/ (Presentation generation)
+│       ├── environment-setup/    (Dependency installation)
+│       ├── power-statement/      (Sales positioning)
+│       └── sail-generation/      (SAIL UI generation)
+├── tools/
+│   ├── generate-image.mjs        (AI image generation)
+│   └── lib/
+│       └── gemini.js             (Gemini API client)
 ├── resources/
 │   ├── branding/
-│   │   └── Appian/            (Logos, templates, icons)
-│   └── sail-generator/        (SAIL generation toolkit)
+│   │   └── Appian/               (Logos, templates, icons)
+│   └── sail-generator/           (SAIL generation toolkit)
+├── output/                       (Generated files - gitignored)
+│   ├── images/
+│   └── presentations/
+├── .env.example                  (API key template)
+├── .gitignore
 └── README.md
+```
+
+## Environment Setup
+
+### Prerequisites
+
+- Node.js 18+ (`node --version`)
+- npm (`npm --version`)
+
+### API Keys
+
+Create a `.env` file from the template:
+
+```bash
+cp .env.example .env
+```
+
+Add your API key:
+```
+GEMINI_API_KEY=your_api_key_here
+```
+
+Get your Gemini API key at: https://aistudio.google.com/apikey
+
+### Dependencies
+
+The `environment-setup` skill installs these automatically:
+
+| Package | Purpose |
+|---------|---------|
+| `pptxgenjs` | PowerPoint file generation |
+| `playwright` | Browser automation for HTML rendering |
+| `sharp` | Image processing for asset rasterisation |
+
+Manual installation:
+```bash
+npm install -g pptxgenjs playwright sharp
+npx playwright install chromium
 ```
 
 ## Resources
 
 ### Branding Assets
+
 Located in `resources/branding/Appian/`:
 - Logo files (SVG, PNG, PDF, JPG)
-- PowerPoint templates (light and dark mode)
-- Word/Google Docs templates
+- PowerPoint templates
 - Icon library (General, Security, HR, Sales, etc.)
-- LinkedIn images
 
 ### SAIL Generator Toolkit
+
 Located in `resources/sail-generator/`:
 - UI component guidelines
 - Logic patterns (null safety, arrays, grids)
 - Record query patterns
-- Conversion guidelines for mockup-to-functional workflow
 - SAIL API schema reference
 
 ## Customisation

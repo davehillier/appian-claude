@@ -2,6 +2,15 @@
 output/
 *.sail
 
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+
+# Node.js
+node_modules/
+package-lock.json
+
 # OS files
 .DS_Store
 Thumbs.db
@@ -15,3 +24,4 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+workspace/
