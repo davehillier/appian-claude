@@ -64,6 +64,32 @@ This will install all required dependencies (Node.js packages, Playwright browse
 
 ---
 
+## CRITICAL: Fixed Element Positioning
+
+**EVERY SLIDE MUST HAVE:**
+
+| Element | Position | CSS | Notes |
+|---------|----------|-----|-------|
+| **Appian Logo** | **Bottom-right** | `bottom: 40px; right: 60px;` | White on dark, Blue on light backgrounds |
+| **Page Counter** | **Bottom-left** | `bottom: 40px; left: 60px;` | Format: `01 / 12` |
+
+**These positions are NON-NEGOTIABLE.** The logo is ALWAYS bottom-right, the page counter is ALWAYS bottom-left. Never swap them, never omit them.
+
+```
+┌─────────────────────────────────────────┐
+│                                         │
+│           SLIDE CONTENT                 │
+│                                         │
+│                                         │
+│ 01 / 12                      [APPIAN]   │
+└─────────────────────────────────────────┘
+   ↑                              ↑
+   Page counter                   Logo
+   (ALWAYS bottom-left)           (ALWAYS bottom-right)
+```
+
+---
+
 ## Presentation Structure
 
 ### Standard Layout
@@ -89,6 +115,26 @@ This will install all required dependencies (Node.js packages, Playwright browse
 | **Logo** | Bottom-right | `bottom: 40px; right: 60px;` |
 | **Page counter** | Bottom-left | `bottom: 40px; left: 60px;` |
 | **Content padding** | All sides | `padding: 60px 80px;` |
+
+### CSS z-index Layering Warning
+
+When adding z-index rules to ensure content appears above background images, you MUST exclude the logo and page counter:
+
+```css
+/* CORRECT: Excludes logo and counter so they keep position: absolute */
+.slide > *:not(.slide-bg-image):not(.logo):not(.slide-counter) {
+    position: relative;
+    z-index: 1;
+}
+
+/* WRONG: Will break logo/counter positioning */
+.slide > *:not(.slide-bg-image) {
+    position: relative;
+    z-index: 1;
+}
+```
+
+**If you don't exclude them, their `position: absolute` gets overridden and they appear at the wrong location.**
 
 ---
 
